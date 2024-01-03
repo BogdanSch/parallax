@@ -13,7 +13,7 @@
 $accent: #359381;
 $accent-dark: #065647;
 $white: #f9f9f9;
-$text-color: #359381;
+$white-dark: #e1e1e1;
 $dark: #003329;
 //Variables - End
 
@@ -50,6 +50,14 @@ img {
   margin: 0 auto;
 }
 
+h2 {
+  font-size: 36px;
+}
+
+p {
+  font-size: 20px;
+}
+
 .btn {
   background-color: transparent;
   border: none;
@@ -66,6 +74,13 @@ img {
 .text-center {
   text-align: center;
 }
+
+div[class*="__image"] {
+  margin: 0 auto;
+  max-width: 80%;
+  min-height: 460px;
+}
+
 // General - End
 //Header - Start
 .header {
@@ -91,7 +106,7 @@ img {
     display: block;
     font-size: 2em;
     font-weight: bold;
-    color: $text-color;
+    color: $accent;
     text-decoration: none;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   }
@@ -100,6 +115,7 @@ img {
     padding: 6px 15px;
     border-radius: 20px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    transition: all 1s ease;
 
     &:hover,
     &.active {
@@ -111,7 +127,7 @@ img {
     a {
       cursor: pointer;
       text-decoration: none;
-      color: $text-color;
+      color: $accent;
       font-weight: 600;
     }
   }
@@ -156,15 +172,17 @@ img {
 
   &__title {
     text-align: center;
-    font-size: 40px;
+    margin-bottom: 40px;
   }
   &__list {
     @include flex-row();
     justify-content: space-around;
+    align-items: center;
     flex-wrap: wrap;
   }
   &__item {
     text-align: center;
+    max-width: calc(100% / 3);
     svg {
       fill: $white;
       width: 80px;
@@ -172,28 +190,39 @@ img {
   }
 }
 //Features - End
-// Info - Start
-.info {
+//About - Start
+.about {
   background: $accent-dark;
   padding-bottom: 20px;
-
+  position: relative;
+  overflow: hidden;
+  &__wrap {
+    position: relative;
+    z-index: 2;
+  }
   h2 {
     text-align: center;
     color: $white;
-    font-size: 2em;
     margin-bottom: 40px;
   }
   p {
-    color: $text-color;
-    font-size: 1.4em;
+    text-align: center;
+    color: $white-dark;
     margin-bottom: 10px;
+  }
+  &__image {
+    background-image: url("../images/flower.jpg");
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
   &__button {
     margin-top: 40px;
   }
 }
-// Info - End
-// Footer - Start
+//About - End
+//Footer - Start
 .footer {
   background-color: $dark;
 
@@ -235,68 +264,76 @@ img {
 }
 // Footer - End
 //Media Queries - Start
-@media screen and (max-width: 670px) {
+@media screen and (max-width: 690px) {
+  .btn {
+    font-size: 24px;
+  }
+  div[class*="__image"] {
+    max-width: 100%;
+    min-height: 360px;
+  }
   .header {
     &__burger {
       display: block;
-      background-color: $accent;
+      // background-color: $accent;
       width: 30px;
-      z-index: 1000;
-      height: 30px;
+      height: 20px;
       position: relative;
 
       &::before {
-        top: 0;
-        display: block;
         content: "";
-        background-color: $white;
+        display: block;
         width: 100%;
-        height: 2px;
+        min-height: 3px;
         position: absolute;
+        top: 0;
         left: 0;
+        background-color: $accent;
         transition: all 0.5s ease;
       }
       &::after {
         content: "";
-        background-color: $white;
+        display: block;
         width: 100%;
-        height: 2px;
+        min-height: 3px;
+        background-color: $accent;
         position: absolute;
         left: 0;
-        transition: all 0.5s ease;
         bottom: 0;
+        transition: all 0.5s ease;
       }
       span {
-        position: absolute;
-        background-color: $white;
-        left: 0;
+        display: block;
         width: 100%;
-        height: 2px;
-        top: 9px;
+        min-height: 3px;
+        position: absolute;
+        background-color: $accent;
+        left: 0;
+        top: 8.5px;
         transition: all 0.5s ease;
       }
       &.active {
         span {
           display: none;
-          transition: all 0.5s ease;
+          // transition: all 0.5s ease;
         }
         &::before {
           transform: rotate(45deg) scale(1);
           top: 9px;
-          transition: all 0.5s ease;
+          // transition: all 0.5s ease;
         }
         &::after {
           transform: rotate(-45deg) scale(1);
           bottom: 9px;
-          transition: all 0.5s ease;
+          // transition: all 0.5s ease;
         }
       }
     }
     &__menu {
-      display: block;
       position: fixed;
       top: 150%;
       left: 0;
+      display: block;
       width: 100%;
       height: 100vh;
       z-index: -1;
@@ -306,13 +343,30 @@ img {
       border-top-left-radius: 40px;
       border-top-right-radius: 40px;
       padding: 30px 20px;
+      transition: all 0.5s ease;
 
       &.active {
         top: 80px;
       }
     }
     &__item {
+      margin-top: 10px;
       padding: 10px 10px;
+    }
+  }
+  .features {
+    &__list {
+      flex-direction: column;
+      align-items: center;
+      row-gap: 20px;
+    }
+    &__item {
+      max-width: 80%;
+    }
+  }
+  .footer {
+    &__wrap {
+      flex-direction: column;
     }
   }
 }
