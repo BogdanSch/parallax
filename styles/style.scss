@@ -1,5 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
-
+//Mixin - Start
+@mixin flex-row {
+  display: flex;
+  flex-direction: row;
+}
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+//Mixin - End
 //Variables  - Start
 $accent: #359381;
 $accent-dark: #065647;
@@ -34,6 +43,29 @@ body {
   padding: 20px 40px;
   margin: 0 auto;
 }
+
+img {
+  width: 68%;
+  display: block;
+  margin: 0 auto;
+}
+
+.btn {
+  background-color: transparent;
+  border: none;
+  color: $white;
+  text-decoration: none;
+
+  &-primary {
+    background-color: $accent !important;
+    padding: 10px 28px;
+    border-radius: 20px;
+  }
+}
+
+.text-center {
+  text-align: center;
+}
 // General - End
 //Header - Start
 .header {
@@ -44,15 +76,16 @@ body {
   z-index: 1000;
 
   &__wrap {
-    display: flex;
+    @include flex-row();
     justify-content: space-between;
     align-items: center;
   }
   &__menu {
-    display: flex;
+    @include flex-row();
     justify-content: space-between;
     align-items: center;
     list-style: none;
+    column-gap: 10px;
   }
   &__logo a {
     display: block;
@@ -63,21 +96,23 @@ body {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   }
   &__item {
+    background: $white;
+    padding: 6px 15px;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
+    &:hover,
+    &.active {
+      background: $accent;
+      a {
+        color: $white;
+      }
+    }
     a {
       cursor: pointer;
       text-decoration: none;
       color: $text-color;
-      background: $white;
-      padding: 6px 15px;
-      border-radius: 20px;
-      margin: 0 10px;
       font-weight: 600;
-
-      &:hover,
-      &.active {
-        background: $accent;
-        color: $white;
-      }
     }
   }
 }
@@ -88,16 +123,16 @@ body {
   overflow: hidden;
 
   &__wrap {
-    display: flex;
+    @include flex-row();
     justify-content: center;
     align-items: center;
     min-height: 100vh;
   }
-  img {
+  &__image {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 100% !important;
     height: 100%;
     object-fit: cover;
   }
@@ -113,9 +148,34 @@ body {
   }
 }
 // Parallax - End
+//Features - Start
+.features {
+  padding: 20px 0;
+  background-color: $dark;
+  color: $white;
+
+  &__title {
+    text-align: center;
+    font-size: 40px;
+  }
+  &__list {
+    @include flex-row();
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  &__item {
+    text-align: center;
+    svg {
+      fill: $white;
+      width: 80px;
+    }
+  }
+}
+//Features - End
 // Info - Start
 .info {
-  background: $dark;
+  background: $accent-dark;
+  padding-bottom: 20px;
 
   h2 {
     text-align: center;
@@ -128,14 +188,49 @@ body {
     font-size: 1.4em;
     margin-bottom: 10px;
   }
+  &__button {
+    margin-top: 40px;
+  }
 }
 // Info - End
 // Footer - Start
 .footer {
+  background-color: $dark;
+
   &__wrap {
-    display: flex;
+    @include flex-row();
     justify-content: space-between;
     align-items: center;
+  }
+  &__social {
+    @include flex-row();
+    align-items: center;
+    justify-content: space-between;
+    a {
+      margin-right: 20px;
+      align-self: center;
+      padding: 2px;
+
+      svg {
+        fill: $white;
+        width: 34px;
+        height: 32px;
+        object-fit: cover;
+        border-radius: 50%;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+          transform: scale(1.2);
+          color: $dark;
+        }
+      }
+    }
+  }
+  &__copyright {
+    p {
+      color: $white;
+      font-size: 16px;
+    }
   }
 }
 // Footer - End
@@ -146,11 +241,13 @@ body {
       display: block;
       background-color: $accent;
       width: 30px;
+      z-index: 1000;
       height: 30px;
       position: relative;
-      z-index: 1000;
 
       &::before {
+        top: 0;
+        display: block;
         content: "";
         background-color: $white;
         width: 100%;
@@ -158,8 +255,6 @@ body {
         position: absolute;
         left: 0;
         transition: all 0.5s ease;
-        top: 0;
-        display: block;
       }
       &::after {
         content: "";
